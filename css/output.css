@@ -1,0 +1,8 @@
+/* output.css */
+button {
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  box-shadow: 0 0 20px #FFD700;
+}
