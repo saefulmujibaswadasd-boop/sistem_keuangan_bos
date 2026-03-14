@@ -1,13 +1,30 @@
-// Contoh data BOS (bisa diganti hasil upload/localStorage)
-const bosData = [
-  { no: 1, tanggal: "01/01/2026", ket: "Pembelian Buku", jumlah: "Rp 2.000.000" },
-  { no: 2, tanggal: "15/02/2026", ket: "Perbaikan Meja", jumlah: "Rp 1.500.000" }
-];
+// Simpan data RKAS ke localStorage
+document.addEventListener("submit", e => {
+  if (e.target.id === "rkasForm") {
+    e.preventDefault();
+    const judul = document.getElementById("judulRkas").value;
+    const file = document.getElementById("fileUpload").files[0]?.name || "Belum ada file";
 
+    let bosData = JSON.parse(localStorage.getItem("bosData")) || [];
+    bosData.push({
+      no: bosData.length + 1,
+      tanggal: new Date().toLocaleDateString("id-ID"),
+      ket: judul,
+      jumlah: "Rp 0",
+      file: file
+    });
+
+    localStorage.setItem("bosData", JSON.stringify(bosData));
+    alert("Data RKAS tersimpan di browser!");
+  }
+});
+
+// Render tabel BOS dari localStorage
 function renderBosTable() {
   const tbody = document.getElementById("bosTableBody");
   if (!tbody) return;
 
+  const bosData = JSON.parse(localStorage.getItem("bosData")) || [];
   tbody.innerHTML = bosData.map(item => `
     <tr>
       <td class="border border-blue-400 px-4 py-2">${item.no}</td>
@@ -31,10 +48,3 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
-
-// panggil saat menu BOS diklik
-document.addEventListener("click", e => {
-  if (e.target.matches("[data-page='laporan-bos']")) {
-    setTimeout(renderBosTable, 100); // delay sedikit agar table sudah ada
-  }
-});
