@@ -7,14 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const page = link.getAttribute("data-page");
 
-      // INPUT RKAS
       if (page === "input-rkas") {
         content.innerHTML = `
           <h2 class="text-xl font-bold mb-4">INPUT RKAS</h2>
-          <form class="space-y-4">
+          <form id="rkasForm" class="space-y-4">
             <div>
               <label class="block mb-2">Judul RKAS</label>
-              <input type="text" class="w-full p-2 rounded bg-blue-100 text-black" placeholder="Masukkan judul RKAS">
+              <input type="text" id="judulRkas" class="w-full p-2 rounded bg-blue-100 text-black" placeholder="Masukkan judul RKAS">
             </div>
             <div>
               <label class="block mb-2">Upload File RKAS</label>
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       }
 
-      // LAPORAN BOS
       else if (page === "laporan-bos") {
         content.innerHTML = `
           <h2 class="text-xl font-bold mb-4">LAPORAN BOS</h2>
@@ -45,28 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <th class="border border-blue-400 px-4 py-2">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="border border-blue-400 px-4 py-2">1</td>
-                <td class="border border-blue-400 px-4 py-2">01/01/2026</td>
-                <td class="border border-blue-400 px-4 py-2">Pembelian Buku</td>
-                <td class="border border-blue-400 px-4 py-2">Rp 2.000.000</td>
-                <td class="border border-blue-400 px-4 py-2">
-                  <select class="bg-blue-100 text-black rounded px-2 py-1">
-                    <option>Triwulan I</option>
-                    <option>Triwulan II</option>
-                    <option>Triwulan III</option>
-                    <option>Triwulan IV</option>
-                  </select>
-                </td>
-                <td class="border border-blue-400 px-4 py-2">
-                  <select class="bg-blue-100 text-black rounded px-2 py-1">
-                    <option>Masuk</option>
-                    <option>Keluar</option>
-                  </select>
-                </td>
-              </tr>
-              <!-- Tambahkan baris lain sesuai data upload -->
+            <tbody id="bosTableBody">
+              <!-- Data akan dimasukkan lewat script.js -->
             </tbody>
           </table>
         `;
