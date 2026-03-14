@@ -1,5 +1,7 @@
 document.getElementById("loginForm").addEventListener("submit", e => {
-  e.preventDefault(); // cegah POST ke server
+  e.preventDefault(); 
+  
+  // cegah POST ke server
   const user = document.getElementById("username").value;
   const pass = document.getElementById("password").value;
 
