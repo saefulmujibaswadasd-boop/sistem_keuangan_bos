@@ -1,3 +1,16 @@
+document.getElementById("loginForm").addEventListener("submit", e => {
+  e.preventDefault(); // cegah POST ke server
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+
+  if (user === "admin" && pass === "1234") {
+    localStorage.setItem("isLoggedIn", "true");
+    window.location.href = "dashboard.html"; // pindah ke dashboard
+  } else {
+    alert("Username atau password salah!");
+  }
+});
+
 // Simpan data RKAS ke localStorage
 document.addEventListener("submit", e => {
   if (e.target.id === "rkasForm") {
