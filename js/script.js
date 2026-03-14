@@ -1,22 +1,28 @@
-document.getElementById("loginForm").addEventListener("submit", e => {
-  e.preventDefault(); 
-  
-  // cegah POST ke server
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
+// LOGIN HANDLER
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.querySelector("form"); // ambil form login
+  if (loginForm) {
+    loginForm.addEventListener("submit", e => {
+      e.preventDefault(); // cegah POST ke server
 
-  if (user === "admin" && pass === "1234") {
-    localStorage.setItem("isLoggedIn", "true");
-    window.location.href = "dashboard.html"; // pindah ke dashboard
-  } else {
-    alert("Username atau password salah!");
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+
+      if (user === "admin" && pass === "1234") {
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "dashboard.html"; // pindah ke dashboard
+      } else {
+        alert("Username atau password salah!");
+      }
+    });
   }
 });
 
-// Simpan data RKAS ke localStorage
+// SIMPAN DATA RKAS KE LOCALSTORAGE
 document.addEventListener("submit", e => {
   if (e.target.id === "rkasForm") {
     e.preventDefault();
+
     const judul = document.getElementById("judulRkas").value;
     const file = document.getElementById("fileUpload").files[0]?.name || "Belum ada file";
 
@@ -34,7 +40,7 @@ document.addEventListener("submit", e => {
   }
 });
 
-// Render tabel BOS dari localStorage
+// RENDER TABEL BOS DARI LOCALSTORAGE
 function renderBosTable() {
   const tbody = document.getElementById("bosTableBody");
   if (!tbody) return;
