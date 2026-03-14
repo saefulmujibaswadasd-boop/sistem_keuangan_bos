@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const page = link.getAttribute("data-page");
 
+      // INPUT RKAS
       if (page === "input-rkas") {
         content.innerHTML = `
           <h2 class="text-xl font-bold mb-4">INPUT RKAS</h2>
@@ -17,10 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div>
               <label class="block mb-2">Upload File RKAS</label>
-              <div id="dropArea" class="border-2 border-dashed border-blue-400 rounded-lg p-6 text-center cursor-pointer">
-                <p class="text-gray-600">Drag & Drop file di sini atau klik untuk upload</p>
-                <input type="file" class="hidden" id="fileUpload">
-              </div>
+              <input type="file" id="fileUpload" class="w-full p-2 rounded bg-blue-100 text-black">
             </div>
             <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">
               Simpan
@@ -29,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       }
 
+      // LAPORAN BOS
       else if (page === "laporan-bos") {
         content.innerHTML = `
           <h2 class="text-xl font-bold mb-4">LAPORAN BOS</h2>
@@ -43,10 +42,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 <th class="border border-blue-400 px-4 py-2">Aksi</th>
               </tr>
             </thead>
-            <tbody id="bosTableBody">
-              <!-- Data akan dimasukkan lewat script.js -->
-            </tbody>
+            <tbody id="bosTableBody"></tbody>
           </table>
+        `;
+
+        // panggil renderBosTable dari script.js
+        setTimeout(renderBosTable, 100);
+      }
+
+      // SIPLAH
+      else if (page === "siplah") {
+        content.innerHTML = `
+          <h2 class="text-xl font-bold mb-4">SIPLAH</h2>
+          <p class="text-gray-200">Integrasi belanja sekolah melalui SIPLAH.</p>
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-4">
+            Tambah Transaksi SIPLAH
+          </button>
+        `;
+      }
+
+      // PERUBAHAN
+      else if (page === "perubahan") {
+        content.innerHTML = `
+          <h2 class="text-xl font-bold mb-4">PERUBAHAN</h2>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Jenis Perubahan</label>
+              <select class="w-full p-2 rounded bg-blue-100 text-black">
+                <option>Tambah Anggaran</option>
+                <option>Kurangi Anggaran</option>
+                <option>Revisi Kegiatan</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-2">Keterangan</label>
+              <textarea class="w-full p-2 rounded bg-blue-100 text-black" rows="4"></textarea>
+            </div>
+            <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">
+              Simpan Perubahan
+            </button>
+          </form>
         `;
       }
     });
