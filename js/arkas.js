@@ -23,10 +23,12 @@ function simulateUpload(file) {
     progressBar.textContent = progress + '%';
 
     if (progress >= 100) {
-      clearInterval(interval);
-      result.classList.remove('hidden');
-      fileList.innerHTML = `<li>${file.name}</li>`;
-    }
+  clearInterval(interval);
+  result.classList.remove('hidden');
+
+  // tampilkan isi file Excel
+  displayData(file);
+}
   }, 300);
 }
 
