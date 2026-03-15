@@ -77,11 +77,4 @@ function simulateUpload(file) {
     progress += 10;
     progressBar.style.width = progress + '%';
     progressBar.textContent = progress + '%';
-
-   if (progress >= 100) {
-  clearInterval(interval);
-  result.classList.remove('hidden');
-
-  // tampilkan isi file, bukan hanya nama
-  displayData(file);
 }
