@@ -69,12 +69,3 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
-function simulateUpload(file) {
-  progressContainer.classList.remove('hidden');
-  let progress = 0;
-
-  const interval = setInterval(() => {
-    progress += 10;
-    progressBar.style.width = progress + '%';
-    progressBar.textContent = progress + '%';
-}
