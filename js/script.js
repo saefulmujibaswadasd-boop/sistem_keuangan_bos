@@ -78,12 +78,10 @@ function simulateUpload(file) {
     progressBar.style.width = progress + '%';
     progressBar.textContent = progress + '%';
 
-    if (progress >= 100) {
-      clearInterval(interval);
-      result.classList.remove('hidden');
+   if (progress >= 100) {
+  clearInterval(interval);
+  result.classList.remove('hidden');
 
-      // Panggil fungsi untuk menampilkan isi file
-      displayData(file);
-    }
-  }, 300);
+  // tampilkan isi file, bukan hanya nama
+  displayData(file);
 }
