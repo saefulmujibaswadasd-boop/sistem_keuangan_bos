@@ -69,3 +69,21 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
+function simulateUpload(file) {
+  progressContainer.classList.remove('hidden');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += 10;
+    progressBar.style.width = progress + '%';
+    progressBar.textContent = progress + '%';
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      result.classList.remove('hidden');
+
+      // Panggil fungsi untuk menampilkan isi file
+      displayData(file);
+    }
+  }, 300);
+}
