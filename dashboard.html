@@ -8,110 +8,76 @@
   <link rel="icon" href="assets/favicon.png" type="image/png">
 </head>
 <body class="w-full bg-blue-900 min-h-screen text-white">
-  
+
   <!-- Header -->
   <header class="w-full h-40 bg-gradient-to-r from-blue-800 via-blue-700 to-blue-900 shadow-lg rounded-b-1xl">
-         
-      <!-- Logo sejajar -->
-      <div class="flex justify-center items-center space-x-3">
-        
-        <!-- Logo kiri -->
-        <div class="bg-white/10 rounded-lg p-0">
-          <img src="assets/logo_pemkab.png" alt="Logo Pemkab" class="w-12 h-12 object-contain">
-        </div>
-
-         <!-- Logo tengah1 (persegi panjang) -->
-        <img src="assets/logo_tutwuri.png" alt="Tutwuri" class="w-12 h-12 object-contain">
-        
-        <!-- Logo tengah2 (persegi panjang) -->
-        <img src="assets/logo_kurikulum_merdeka.png" alt="Kurikulum" class="w-14 h-14 object-contain">
-            
-         <!-- Logo tengah3 (persegi panjang) -->
-        <img src="assets/logo_ramah.png" alt="Tutwuri" class="w-14 h-14 object-contain">
-        
-        <!-- Logo kanan -->
-        <div class="bg-white/10 rounded-lg p-0">
-          <img src="assets/logo_sekolah.png" alt="Logo Sekolah" class="w-12 h-12 object-contain">
-        </div>
-      </div>
-
-      <!-- Judul di header -->
-      <h1 class="text-2xl md:text-3xl font-extrabold text-amber-300 tracking-wide text-center">
-        SISTEM KEUANGAN SD NEGERI WONOKERTO
-      </h1>
+    <!-- Logo sejajar -->
+    <div class="flex justify-center items-center space-x-3">
+      <img src="assets/logo_pemkab.png" alt="Logo Pemkab" class="w-12 h-12 object-contain">
+      <img src="assets/logo_tutwuri.png" alt="Tutwuri" class="w-12 h-12 object-contain">
+      <img src="assets/logo_kurikulum_merdeka.png" alt="Kurikulum" class="w-14 h-14 object-contain">
+      <img src="assets/logo_ramah.png" alt="Ramah" class="w-14 h-14 object-contain">
+      <img src="assets/logo_sekolah.png" alt="Logo Sekolah" class="w-12 h-12 object-contain">
     </div>
+    <h1 class="text-2xl md:text-3xl font-extrabold text-amber-300 tracking-wide text-center">
+      SISTEM KEUANGAN SD NEGERI WONOKERTO
+    </h1>
   </header>
 
-  <!-- Sidebar -->
-  <aside class="w-60 bg-blue-900 shadow-lg rounded-r-1xl p-4">
-    <h2 class="text-lg font-bold text-amber-300 mb-2">Menu</h2>
-    <nav class="flex flex-col space-y-3">
-      <a href="#input-rkas" class="px-3 py-1 hover:text-amber-300">INPUT RKAS</a>
-      
-      <a href="#laporan-bos" class="px-3 py-1 hover:text-amber-300">LAPORAN BOS</a>
-      <a href="#siplah" class="px-3 py-1 hover:text-amber-300">SIPLAH</a>
-      <a href="#perubahan" class="px-3 py-1 hover:text-amber-300">PERUBAHAN</a>
-    </nav>
- 
-  <!-- Konten utama (sebelah kanan) -->
-  <main class="flex-1 p-6">
-    
-    <!-- Section Laporan -->
-    <section id="laporan" class="mt-8">
-      <h2 class="text-xl font-bold mb-4">Laporan BOS</h2>
-      <p>Di sini nanti tampil rekap laporan BOS.</p>
-    </section>
-  </main>
-</div>
-  </aside>
+  <div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-60 bg-blue-900 shadow-lg rounded-r-1xl p-4">
+      <h2 class="text-lg font-bold text-amber-300 mb-2">Menu</h2>
+      <nav class="flex flex-col space-y-3">
+        <button id="menu-arkas" class="text-left px-3 py-1 hover:text-amber-300">INPUT ARKAS</button>
+        <a href="#laporan-bos" class="px-3 py-1 hover:text-amber-300">LAPORAN BOS</a>
+        <a href="#siplah" class="px-3 py-1 hover:text-amber-300">SIPLAH</a>
+        <a href="#perubahan" class="px-3 py-1 hover:text-amber-300">PERUBAHAN</a>
+      </nav>
+    </aside>
 
-  <!-- Konten dashboard -->
-   
-  <!-- Area drag & drop -->
-  <div class="border-2 border-dashed border-gray-400 p-6 text-center rounded hover:bg-gray-100">
-    <p class="mb-2">Upload file ARKAS di sini:</p>
-    <input type="file" accept=".xlsx,.xls,.csv,.json" class="block mx-auto mb-4">
-    <p class="text-gray-500">atau drag & drop file ke area ini</p>
-  </div>
-   <!-- Progress bar -->
-      <div id="progress-container" class="hidden mt-4">
-        <div class="w-full bg-gray-200 rounded">
-          <div id="progress-bar" class="bg-wonokerto text-xs leading-none py-1 text-center text-white rounded" style="width:0%">
-            0%
+    <!-- Konten utama -->
+    <main class="flex-1 p-6">
+      <!-- Section ARKAS (disembunyikan dulu) -->
+      <section id="input-arkas" class="hidden">
+        <h2 class="text-xl font-bold mb-4">Input Data ARKAS</h2>
+
+        <!-- Area drag & drop -->
+        <div id="drop-area" class="border-2 border-dashed border-gray-400 p-6 text-center rounded hover:bg-gray-100">
+          <p class="mb-2">Upload file ARKAS di sini:</p>
+          <input id="fileInput" type="file" accept=".xlsx,.xls,.csv,.json" class="block mx-auto mb-4">
+          <p class="text-gray-500">atau drag & drop file ke area ini</p>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="progress-container" class="hidden mt-4">
+          <div class="w-full bg-gray-200 rounded">
+            <div id="progress-bar" class="bg-amber-500 text-xs leading-none py-1 text-center text-white rounded" style="width:0%">
+              0%
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Hasil data -->
-      <div id="result" class="mt-6 hidden">
-        <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
-        <ul id="file-list" class="list-disc pl-6 text-gray-700"></ul>
-      </div>
-    </section>
-  </main>
+        <!-- Hasil data -->
+        <div id="result" class="mt-6 hidden">
+          <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
+          <ul id="file-list" class="list-disc pl-6 text-gray-700"></ul>
+        </div>
+      </section>
 
-  <script src="js/arkas.js"></script>
-</body>
-</html>
-
-
-  <!-- Tombol aksi -->
-  <div class="mt-4 text-center">
-    <button class="bg-wonokerto text-white px-4 py-2 rounded hover:bg-blue-700">
-      Proses Data
-    </button>
+      <!-- Section Laporan -->
+      <section id="laporan-bos" class="mt-8">
+        <h2 class="text-xl font-bold mb-4">Laporan BOS</h2>
+        <p>Di sini nanti tampil rekap laporan BOS.</p>
+      </section>
+    </main>
   </div>
-</section>
-  <main class="p-6">
-    <!-- nanti isi tabel transaksi BOS dan navigasi kategori -->
-  </main>
 
   <!-- Footer -->
   <footer class="w-full bg-blue-800 text-center py-3 text-sm text-gray-200 border-t border-blue-700">
     2026 | SISTEM KEUANGAN | SD NEGERI WONOKERTO | LEKSONO | sd_wonokerto@gmail.com
   </footer>
+
+  <script src="js/arkas.js"></script>
 </body>
 </html>
-
-
-
