@@ -57,9 +57,9 @@ function displayData(file) {
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
 
-    // Buat tabel HTML (10 baris pertama)
+    // Buat tabel HTML (semua baris)
     let table = '<table class="table-auto border-collapse border border-gray-400 mt-4">';
-    rows.slice(0, 10).forEach(row => {
+    rows.forEach(row => {
       table += '<tr>';
       row.forEach(cell => {
         table += `<td class="border border-gray-400 px-2 py-1">${cell}</td>`;
