@@ -51,9 +51,44 @@
       <a href="#siplah" class="px-3 py-1 hover:text-amber-300">SIPLAH</a>
       <a href="#perubahan" class="px-3 py-1 hover:text-amber-300">PERUBAHAN</a>
     </nav>
-    <li>
-  <a href="#input-arkas" class="block py-1 px-2 rounded hover:bg-blue-600">Input Data ARKAS</a>
-</li>
+   <li class="mb-2">
+          <a href="#input-arkas" class="block py-2 px-3 rounded hover:bg-blue-700">
+            Input Data ARKAS
+          </a>
+        </li>
+        <li class="mb-2">
+          <a href="#laporan" class="block py-2 px-3 rounded hover:bg-blue-700">
+            Laporan
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Konten utama (sebelah kanan) -->
+  <main class="flex-1 p-6">
+    <!-- Section Input ARKAS -->
+    <section id="input-arkas" class="mt-8">
+      <h2 class="text-xl font-bold mb-4">Input Data ARKAS</h2>
+      <div class="border-2 border-dashed border-gray-400 p-6 text-center rounded hover:bg-gray-100">
+        <p class="mb-2">Upload file ARKAS di sini:</p>
+        <input type="file" accept=".xlsx,.xls,.csv,.json" class="block mx-auto mb-4">
+        <p class="text-gray-500">atau drag & drop file ke area ini</p>
+      </div>
+      <div class="mt-4 text-center">
+        <button class="bg-wonokerto text-white px-4 py-2 rounded hover:bg-blue-700">
+          Proses Data
+        </button>
+      </div>
+    </section>
+
+    <!-- Section Laporan -->
+    <section id="laporan" class="mt-8">
+      <h2 class="text-xl font-bold mb-4">Laporan BOS</h2>
+      <p>Di sini nanti tampil rekap laporan BOS.</p>
+    </section>
+  </main>
+</div>
   </aside>
 
   <!-- Konten dashboard -->
