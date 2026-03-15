@@ -45,7 +45,34 @@ dropArea.addEventListener('dragover', (e) => {
 dropArea.addEventListener('dragleave', () => {
   dropArea.classList.remove('bg-gray-200');
 });
+function displayData(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
 
+    // Ambil sheet pertama
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+    // Buat tabel HTML (10 baris pertama)
+    let table = '<table class="table-auto border-collapse border border-gray-400 mt-4">';
+    rows.slice(0, 10).forEach(row => {
+      table += '<tr>';
+      row.forEach(cell => {
+        table += `<td class="border border-gray-400 px-2 py-1">${cell}</td>`;
+      });
+      table += '</tr>';
+    });
+    table += '</table>';
+
+    result.innerHTML = `
+      <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
+      ${table}
+    `;
+  };
+  reader.readAsArrayBuffer(file);
+}
 dropArea.addEventListener('drop', (e) => {
   e.preventDefault();
   dropArea.classList.remove('bg-gray-200');
