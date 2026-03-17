@@ -79,33 +79,9 @@ function displayData(file) {
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: "" });
 
-    let table = `
-      <div class="overflow-x-auto">
-        <table class="table-auto border-collapse border border-gray-400 mt-4 w-full text-sm">
-          <thead class="bg-blue-200 text-black font-bold">
-            <tr>
-              ${rows[0].map(cell => `<th class="border border-gray-400 px-2 py-1">${cell}</th>`).join("")}
-            </tr>
-          </thead>
-          <tbody>
-    `;
-
-    rows.slice(1).forEach((row, idx) => {
-      table += `<tr class="${idx % 2 === 0 ? 'bg-white text-black' : 'bg-gray-100 text-black'}">`;
-      row.forEach(cell => {
-        let value = cell;
-        if (typeof cell === "number") {
-          value = cell.toLocaleString("id-ID");
-        }
-        table += `<td class="border border-gray-400 px-2 py-1">${value}</td>`;
-      });
-      table += '</tr>';
-
+    rows.slice(1).forEach((row) => {
       tambahLaporanBos(row);
     });
-
-    table += `</tbody></table></div>`;
-    result.innerHTML = `<h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>${table}`;
   };
   reader.readAsArrayBuffer(file);
 }
@@ -127,14 +103,7 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[6] || '-'}</td>
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>Masuk</option>
-          <option>Keluar</option>
-        </select>
-      </td>
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>✏️ Edit</option>
-          <option>🗑️ Hapus</option>
+          <option>Aksi</option>
         </select>
       </td>
     </tr>
@@ -143,22 +112,18 @@ function tambahLaporanBos(rowData) {
 
 // 🔐 Event listener dropdown Aksi
 document.getElementById('laporanBody').addEventListener('change', (e) => {
-  if (e.target.tagName === 'SELECT') {
-    const selected = e.target.value.trim();
+  if (e.target.tagName === 'SELECT' && e.target.value === 'Aksi') {
+    const lastShown = localStorage.getItem('lastShownSaeful');
+    const now = Date.now();
 
-    if (selected === '✏️ Edit' || selected === '🗑️ Hapus') {
-      const lastShown = localStorage.getItem('lastShownSaeful');
-      const now = Date.now();
-
-      if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-        pendingAction = { action: selected, row: e.target.closest('tr') };
-        passwordModal.classList.remove('hidden'); // tampilkan modal password
-      } else {
-        jalankanAksi(selected, e.target.closest('tr'));
-      }
-
-      e.target.selectedIndex = 0; // reset dropdown
+    if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+      pendingAction = { row: e.target.closest('tr') };
+      passwordModal.classList.remove('hidden'); // tampilkan modal password
+    } else {
+      tampilkanDropdownAksi(e.target.closest('tr'));
     }
+
+    e.target.selectedIndex = 0;
   }
 });
 
@@ -172,9 +137,8 @@ cancelBtn.addEventListener('click', () => {
 // tombol submit modal
 submitBtn.addEventListener('click', () => {
   if (passwordInput.value === "saeful") {
-    alert("Password benar. Lanjut ke aksi: " + pendingAction.action);
     localStorage.setItem('lastShownSaeful', Date.now());
-    jalankanAksi(pendingAction.action, pendingAction.row);
+    tampilkanDropdownAksi(pendingAction.row);
     passwordModal.classList.add('hidden');
     passwordInput.value = "";
     pendingAction = null;
@@ -182,6 +146,26 @@ submitBtn.addEventListener('click', () => {
     alert("Password salah!");
   }
 });
+
+// fungsi tampilkan dropdown Edit/Hapus
+function tampilkanDropdownAksi(row) {
+  const aksiCell = row.querySelectorAll('td')[8]; // kolom aksi
+  aksiCell.innerHTML = `
+    <select class="bg-blue-100 text-black rounded px-2 py-1">
+      <option>Pilih</option>
+      <option>✏️ Edit</option>
+      <option>🗑️ Hapus</option>
+    </select>
+  `;
+
+  aksiCell.querySelector('select').addEventListener('change', (e) => {
+    const selected = e.target.value.trim();
+    if (selected === "✏️ Edit" || selected === "🗑️ Hapus") {
+      jalankanAksi(selected, row);
+      e.target.selectedIndex = 0;
+    }
+  });
+}
 
 // fungsi aksi edit/hapus
 function jalankanAksi(action, row) {
@@ -193,44 +177,44 @@ function jalankanAksi(action, row) {
     const sat = cells[4].textContent;
     const hSat = cells[5].textContent;
 
-   // tampilkan form edit di bawah baris
-row.insertAdjacentHTML('afterend', `
-  <tr class="bg-yellow-100">
-    <td colspan="10">
-      <div class="p-2 space-x-2">
-        <label>Kode Rek: <input id="editKode" value="${kodeRek}" class="border px-2 py-1"></label>
-        <label>Uraian: <input id="editUraian" value="${uraian}" class="border px-2 py-1"></label>
-        <label>Vol: <input id="editVol" type="number" value="${vol}" class="border px-2 py-1"></label>
-        <label>Sat: <input id="editSat" value="${sat}" class="border px-2 py-1"></label>
-        <label>H.Sat: <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1"></label>
-        <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">Simpan</button>
-      </div>
-    </td>
-  </tr>
-`);
+    // tampilkan form edit di bawah baris
+    row.insertAdjacentHTML('afterend', `
+      <tr class="bg-yellow-100">
+        <td colspan="10">
+          <div class="p-2 space-x-2">
+            <label>Kode Rek: <input id="editKode" value="${kodeRek}" class="border px-2 py-1"></label>
+            <label>Uraian: <input id="editUraian" value="${uraian}" class="border px-2 py-1"></label>
+            <label>Vol: <input id="editVol" type="number" value="${vol}" class="border px-2 py-1"></label>
+            <label>Sat: <input id="editSat" value="${sat}" class="border px-2 py-1"></label>
+            <label>H.Sat: <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1"></label>
+            <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">Simpan</button>
+          </div>
+        </td>
+      </tr>
+    `);
 
-// hitung otomatis Jumlah saat Vol/H.Sat berubah
-document.getElementById('editVol').addEventListener('input', updateJumlah);
-document.getElementById('editHsat').addEventListener('input', updateJumlah);
+    // hitung otomatis Jumlah saat Vol/H.Sat berubah
+    document.getElementById('editVol').addEventListener('input', updateJumlah);
+    document.getElementById('editHsat').addEventListener('input', updateJumlah);
 
-function updateJumlah() {
-  const volVal = parseFloat(document.getElementById('editVol').value) || 0;
-  const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
-  cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
-}
+    function updateJumlah() {
+      const volVal = parseFloat(document.getElementById('editVol').value) || 0;
+      const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
+      cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
+    }
 
-// tombol simpan edit
-document.getElementById('saveEdit').addEventListener('click', () => {
-  cells[1].textContent = document.getElementById('editKode').value;
-  cells[2].textContent = document.getElementById('editUraian').value;
-  cells[3].textContent = document.getElementById('editVol').value;
-  cells[4].textContent = document.getElementById('editSat').value;
-  cells[5].textContent = document.getElementById('editHsat').value;
-  updateJumlah();
-  row.nextElementSibling.remove(); // hapus form edit
-});
+    // tombol simpan edit
+    document.getElementById('saveEdit').addEventListener('click', () => {
+      cells[1].textContent = document.getElementById('editKode').value;
+      cells[2].textContent = document.getElementById('editUraian').value;
+      cells[3].textContent = document.getElementById('editVol').value;
+      cells[4].textContent = document.getElementById('editSat').value;
+      cells[5].textContent = document.getElementById('editHsat').value;
+      updateJumlah();
+      row.nextElementSibling.remove(); // hapus form edit
+    });
 
-} else if (action === "🗑️ Hapus") {
-  row.remove(); // langsung hapus baris
-}
+  } else if (action === "🗑️ Hapus") {
+    row.remove(); // langsung hapus baris
+  }
 }
