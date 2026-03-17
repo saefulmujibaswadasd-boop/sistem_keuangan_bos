@@ -69,3 +69,7 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
+if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+    alert("ID: saeful\nPassword: saeful");
+    localStorage.setItem('lastShownSaeful', now);
+}
