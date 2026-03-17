@@ -191,11 +191,17 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
 
       // cek apakah sudah lebih dari 1 jam (3600000 ms)
       if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-        alert("ID: saeful\nPassword: saeful");
-        localStorage.setItem('lastShownSaeful', now);
+        // tampilkan field password
+        const inputPass = prompt("Masukkan password untuk melanjutkan:");
+        if (inputPass === "saeful") {
+          alert("Password benar. Lanjut ke aksi: " + selected);
+          localStorage.setItem('lastShownSaeful', now);
+          // di sini kamu bisa panggil fungsi edit/hapus sesuai pilihan
+        } else {
+          alert("Password salah!");
+        }
       } else {
-        // kalau belum 1 jam, tidak tampilkan lagi
-        console.log("ID/password sudah ditampilkan, tunggu 1 jam lagi.");
+        console.log("Password sudah dimasukkan, tunggu 1 jam lagi.");
       }
 
       // reset dropdown ke default
