@@ -91,4 +91,11 @@ function displayData(file) {
   };
   reader.readAsArrayBuffer(file);
 }
+const menuLaporanBos = document.querySelector('a[href="#laporan-bos"]');
+const laporanSection = document.getElementById('laporan-bos');
 
+menuLaporanBos.addEventListener('click', (e) => {
+  e.preventDefault();
+  laporanSection.classList.remove('hidden');
+  inputArkas.classList.add('hidden'); // sembunyikan form ARKAS
+});
