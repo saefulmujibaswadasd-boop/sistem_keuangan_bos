@@ -101,6 +101,14 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[4] || '-'}</td>
       <td class="border px-2 py-1">${rowData[5] || '-'}</td>
       <td class="border px-2 py-1">${rowData[6] || '-'}</td>
+      <!-- Kolom Kategori -->
+      <td class="border px-2 py-1">
+        <select class="bg-blue-100 text-black rounded px-2 py-1">
+          <option>Masuk</option>
+          <option>Keluar</option>
+        </select>
+      </td>
+      <!-- Kolom Aksi -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Aksi</option>
@@ -149,7 +157,7 @@ submitBtn.addEventListener('click', () => {
 
 // fungsi tampilkan dropdown Edit/Hapus
 function tampilkanDropdownAksi(row) {
-  const aksiCell = row.querySelectorAll('td')[8]; // kolom aksi
+  const aksiCell = row.querySelectorAll('td')[9]; // kolom aksi
   aksiCell.innerHTML = `
     <select class="bg-blue-100 text-black rounded px-2 py-1">
       <option>Pilih</option>
