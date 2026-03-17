@@ -133,7 +133,7 @@ function tambahLaporanBos(rowData) {
       </td>
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>✏️ Edit</option>
+          <option>✏️</option>
           <option>🗑️ Hapus</option>
         </select>
       </td>
@@ -146,7 +146,7 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
     const selected = e.target.value.trim();
 
-    if (selected === '✏️ Edit' || selected === '🗑️ Hapus') {
+    if (selected === '✏️' || selected === '🗑️') {
       const lastShown = localStorage.getItem('lastShownSaeful');
       const now = Date.now();
 
@@ -185,10 +185,10 @@ submitBtn.addEventListener('click', () => {
 
 // fungsi aksi edit/hapus
 function jalankanAksi(action) {
-  if (action === "✏️ Edit") {
+  if (action === "✏️") {
     console.log("Lakukan proses edit...");
     // tambahkan logika edit di sini
-  } else if (action === "🗑️ Hapus") {
+  } else if (action === "🗑️") {
     console.log("Lakukan proses hapus...");
     const tbody = document.getElementById("laporanBody");
     if (tbody.lastChild) {
