@@ -180,3 +180,26 @@ function displayData(file) {
   };
   reader.readAsArrayBuffer(file);
 }
+// Tangani aksi di tabel Laporan BOS
+document.getElementById('laporanBody').addEventListener('change', (e) => {
+  if (e.target.tagName === 'SELECT') {
+    const selected = e.target.value;
+
+    if (selected.includes('Edit') || selected.includes('Hapus')) {
+      const lastShown = localStorage.getItem('lastShownSaeful');
+      const now = Date.now();
+
+      // cek apakah sudah lebih dari 1 jam (3600000 ms)
+      if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+        alert("ID: saeful\nPassword: saeful");
+        localStorage.setItem('lastShownSaeful', now);
+      } else {
+        // kalau belum 1 jam, tidak tampilkan lagi
+        console.log("ID/password sudah ditampilkan, tunggu 1 jam lagi.");
+      }
+
+      // reset dropdown ke default
+      e.target.selectedIndex = 0;
+    }
+  }
+});
