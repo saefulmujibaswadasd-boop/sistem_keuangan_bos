@@ -62,6 +62,7 @@ function displayData(file) {
           <thead class="bg-blue-200 text-black font-bold">
             <tr>
               ${rows[0].map(cell => `<th class="border border-gray-400 px-2 py-1">${cell}</th>`).join("")}
+              <th class="border border-gray-400 px-2 py-1">Tipe Data</th>
             </tr>
           </thead>
           <tbody>
@@ -69,16 +70,24 @@ function displayData(file) {
 
     rows.slice(1).forEach((row, idx) => {
       table += `<tr class="${idx % 2 === 0 ? 'bg-white text-black' : 'bg-gray-100 text-black'}">`;
+      let rowType = "Campuran";
+
       row.forEach(cell => {
         let value = cell;
 
         // Jika cell berupa angka, format ribuan
         if (typeof cell === "number") {
-          value = cell.toLocaleString("id-ID"); 
+          value = cell.toLocaleString("id-ID");
+          rowType = "Angka";
+        } else if (typeof cell === "string" && cell.trim() !== "") {
+          rowType = "Teks";
         }
 
         table += `<td class="border border-gray-400 px-2 py-1">${value}</td>`;
       });
+
+      // Tambahkan kolom tipe data di sebelah kanan
+      table += `<td class="border border-gray-400 px-2 py-1 font-semibold">${rowType}</td>`;
       table += '</tr>';
     });
 
