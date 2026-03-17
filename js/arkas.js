@@ -53,20 +53,29 @@ function displayData(file) {
     const data = new Uint8Array(e.target.result);
     const workbook = XLSX.read(data, { type: 'array' });
 
-    // Ambil sheet pertama
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+    const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: "" });
 
-    // Buat tabel HTML (semua baris)
-    let table = '<table class="table-auto border-collapse border border-gray-400 mt-4">';
-    rows.forEach(row => {
-      table += '<tr>';
+    // Buat tabel HTML dengan styling Tailwind
+    let table = `
+      <table class="table-auto border-collapse border border-gray-400 mt-4 w-full text-sm">
+        <thead class="bg-blue-200 text-black font-bold">
+          <tr>
+            ${rows[0].map(cell => `<th class="border border-gray-400 px-2 py-1">${cell}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    rows.slice(1).forEach((row, idx) => {
+      table += `<tr class="${idx % 2 === 0 ? 'bg-white text-black' : 'bg-gray-100 text-black'}">`;
       row.forEach(cell => {
         table += `<td class="border border-gray-400 px-2 py-1">${cell}</td>`;
       });
       table += '</tr>';
     });
-    table += '</table>';
+
+    table += `</tbody></table>`;
 
     result.innerHTML = `
       <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
@@ -75,9 +84,3 @@ function displayData(file) {
   };
   reader.readAsArrayBuffer(file);
 }
-dropArea.addEventListener('drop', (e) => {
-  e.preventDefault();
-  dropArea.classList.remove('bg-gray-200');
-  const file = e.dataTransfer.files[0];
-  if (file) simulateUpload(file);
-});
