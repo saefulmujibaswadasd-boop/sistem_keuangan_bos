@@ -56,26 +56,33 @@ function displayData(file) {
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: "" });
 
-    // Buat tabel HTML dengan styling Tailwind
     let table = `
-      <table class="table-auto border-collapse border border-gray-400 mt-4 w-full text-sm">
-        <thead class="bg-blue-200 text-black font-bold">
-          <tr>
-            ${rows[0].map(cell => `<th class="border border-gray-400 px-2 py-1">${cell}</th>`).join("")}
-          </tr>
-        </thead>
-        <tbody>
+      <div class="overflow-x-auto">
+        <table class="table-auto border-collapse border border-gray-400 mt-4 w-full text-sm">
+          <thead class="bg-blue-200 text-black font-bold">
+            <tr>
+              ${rows[0].map(cell => `<th class="border border-gray-400 px-2 py-1">${cell}</th>`).join("")}
+            </tr>
+          </thead>
+          <tbody>
     `;
 
     rows.slice(1).forEach((row, idx) => {
       table += `<tr class="${idx % 2 === 0 ? 'bg-white text-black' : 'bg-gray-100 text-black'}">`;
       row.forEach(cell => {
-        table += `<td class="border border-gray-400 px-2 py-1">${cell}</td>`;
+        let value = cell;
+
+        // Jika cell berupa angka, format ribuan
+        if (typeof cell === "number") {
+          value = cell.toLocaleString("id-ID"); 
+        }
+
+        table += `<td class="border border-gray-400 px-2 py-1">${value}</td>`;
       });
       table += '</tr>';
     });
 
-    table += `</tbody></table>`;
+    table += `</tbody></table></div>`;
 
     result.innerHTML = `
       <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
