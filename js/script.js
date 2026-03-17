@@ -73,3 +73,23 @@ if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
     alert("ID: saeful\nPassword: saeful");
     localStorage.setItem('lastShownSaeful', now);
 }
+document.getElementById('laporanBody').addEventListener('change', (e) => {
+  if (e.target.tagName === 'SELECT') {
+    const selected = e.target.value;
+
+    if (selected.includes('Edit') || selected.includes('Hapus')) {
+      const lastShown = localStorage.getItem('lastShownSaeful');
+      const now = Date.now();
+
+      if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+        // ⬇️ Ganti prompt dengan baris ini
+        pendingAction = selected;
+        passwordModal.classList.remove('hidden'); // tampilkan modal password
+      } else {
+        jalankanAksi(selected); // langsung jalankan kalau masih dalam 1 jam
+      }
+
+      e.target.selectedIndex = 0; // reset dropdown
+    }
+  }
+});
