@@ -5,7 +5,6 @@ const fileInput = document.getElementById('fileInput');
 const progressContainer = document.getElementById('progress-container');
 const progressBar = document.getElementById('progress-bar');
 const result = document.getElementById('result');
-const fileList = document.getElementById('file-list');
 const dropArea = document.getElementById('drop-area');
 
 const menuLaporanBos = document.querySelector('a[href="#laporan-bos"]');
@@ -18,26 +17,26 @@ const cancelBtn = document.getElementById('cancelBtn');
 const submitBtn = document.getElementById('submitBtn');
 let pendingAction = null;
 
-// Fungsi bantu sembunyikan semua section
+// Fungsi sembunyikan semua section
 function hideAllSections() {
   inputArkas.classList.add('hidden');
   laporanSection.classList.add('hidden');
 }
 
-// Klik menu ARKAS → tampilkan form upload
+// Klik menu ARKAS
 menuArkas.addEventListener('click', () => {
   hideAllSections();
   inputArkas.classList.remove('hidden');
 });
 
-// Klik menu LAPORAN BOS → tampilkan tabel BOS
+// Klik menu LAPORAN BOS
 menuLaporanBos.addEventListener('click', (e) => {
   e.preventDefault();
   hideAllSections();
   laporanSection.classList.remove('hidden');
 });
 
-// Fungsi simulasi upload
+// Simulasi upload
 function simulateUpload(file) {
   progressContainer.classList.remove('hidden');
   let progress = 0;
@@ -50,7 +49,7 @@ function simulateUpload(file) {
     if (progress >= 100) {
       clearInterval(interval);
       result.classList.remove('hidden');
-      displayData(file); // tampilkan isi file Excel
+      displayData(file);
     }
   }, 300);
 }
@@ -70,7 +69,7 @@ dropArea.addEventListener('dragleave', () => {
   dropArea.classList.remove('bg-gray-200');
 });
 
-// Fungsi tampilkan isi file Excel + masukkan ke Laporan BOS
+// Tampilkan isi file Excel + masukkan ke Laporan BOS
 function displayData(file) {
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -96,27 +95,22 @@ function displayData(file) {
       row.forEach(cell => {
         let value = cell;
         if (typeof cell === "number") {
-          value = cell.toLocaleString("id-ID"); // format ribuan
+          value = cell.toLocaleString("id-ID");
         }
         table += `<td class="border border-gray-400 px-2 py-1">${value}</td>`;
       });
       table += '</tr>';
 
-      // 🚀 Masukkan otomatis ke Laporan BOS
       tambahLaporanBos(row);
     });
 
     table += `</tbody></table></div>`;
-
-    result.innerHTML = `
-      <h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>
-      ${table}
-    `;
+    result.innerHTML = `<h3 class="text-lg font-semibold mb-2">Data ARKAS yang diinput:</h3>${table}`;
   };
   reader.readAsArrayBuffer(file);
 }
 
-// Fungsi tambah baris ke Laporan BOS
+// Tambah baris ke Laporan BOS
 function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
@@ -150,20 +144,20 @@ function tambahLaporanBos(rowData) {
 // 🔐 Password Modal Handler
 document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
-    const selected = e.target.value;
+    const selected = e.target.value.trim();
 
-    if (selected.includes('Edit') || selected.includes('Hapus')) {
+    if (selected === '✏️ Edit' || selected === '🗑️ Hapus') {
       const lastShown = localStorage.getItem('lastShownSaeful');
       const now = Date.now();
 
       if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
         pendingAction = selected;
-        passwordModal.classList.remove('hidden'); // tampilkan modal password
+        passwordModal.classList.remove('hidden');
       } else {
-        jalankanAksi(selected); // langsung jalankan kalau masih dalam 1 jam
+        jalankanAksi(selected);
       }
 
-      e.target.selectedIndex = 0; // reset dropdown
+      e.target.selectedIndex = 0;
     }
   }
 });
@@ -191,10 +185,10 @@ submitBtn.addEventListener('click', () => {
 
 // fungsi aksi edit/hapus
 function jalankanAksi(action) {
-  if (action.includes("Edit")) {
+  if (action === "✏️ Edit") {
     console.log("Lakukan proses edit...");
     // tambahkan logika edit di sini
-  } else if (action.includes("Hapus")) {
+  } else if (action === "🗑️ Hapus") {
     console.log("Lakukan proses hapus...");
     const tbody = document.getElementById("laporanBody");
     if (tbody.lastChild) {
