@@ -130,8 +130,17 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
     const selected = e.target.value.trim();
     if (selected === '✏️ Edit' || selected === '🗑️ Hapus') {
-      pendingAction = { action: selected, row: e.target.closest('tr') };
-      passwordModal.classList.remove('hidden'); // tampilkan modal password
+      const lastShown = localStorage.getItem('lastShownSaeful');
+      const now = Date.now();
+
+      // cek apakah sudah lewat 1 jam
+      if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+        pendingAction = { action: selected, row: e.target.closest('tr') };
+        passwordModal.classList.remove('hidden'); // tampilkan modal password
+      } else {
+        jalankanAksi(selected, e.target.closest('tr')); // langsung jalankan
+      }
+
       e.target.selectedIndex = 0;
     }
   }
@@ -147,6 +156,9 @@ cancelBtn.addEventListener('click', () => {
 // tombol submit modal
 submitBtn.addEventListener('click', () => {
   if (passwordInput.value === "saeful") {
+    // simpan waktu terakhir password benar
+    localStorage.setItem('lastShownSaeful', Date.now());
+
     jalankanAksi(pendingAction.action, pendingAction.row);
     passwordModal.classList.add('hidden');
     passwordInput.value = "";
