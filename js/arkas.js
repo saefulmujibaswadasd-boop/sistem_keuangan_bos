@@ -91,7 +91,6 @@ function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
 
-  // format angka dengan ribuan
   function formatAngka(val) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
   }
@@ -105,12 +104,33 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
+      <!-- Kolom Jumlah -->
       <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
-      <!-- Kolom Kategori -->
+      <!-- Kolom Kategori (geser ke kanan) -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Masuk</option>
           <option>Keluar</option>
+        </select>
+      </td>
+      <!-- Kolom Total -->
+      <td class="border px-2 py-1">-</td>
+      <!-- Kolom Triwulan -->
+      <td class="border px-2 py-1">
+        <select class="bg-blue-100 text-black rounded px-2 py-1">
+          <option>I</option>
+          <option>II</option>
+          <option>III</option>
+          <option>IV</option>
+        </select>
+      </td>
+      <!-- Kolom Administrasi -->
+      <td class="border px-2 py-1">
+        <select class="bg-blue-100 text-black rounded px-2 py-1">
+          <option>Kwitansi</option>
+          <option>Dinas</option>
+          <option>Nota</option>
+          <option>Lainnya</option>
         </select>
       </td>
       <!-- Kolom Aksi -->
