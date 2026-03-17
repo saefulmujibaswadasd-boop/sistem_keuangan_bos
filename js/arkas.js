@@ -7,9 +7,26 @@ const result = document.getElementById('result');
 const fileList = document.getElementById('file-list');
 const dropArea = document.getElementById('drop-area');
 
+const menuLaporanBos = document.querySelector('a[href="#laporan-bos"]');
+const laporanSection = document.getElementById('laporan-bos');
+
+// fungsi bantu untuk sembunyikan semua section
+function hideAllSections() {
+  inputArkas.classList.add('hidden');
+  laporanSection.classList.add('hidden');
+}
+
 // Klik menu ARKAS → tampilkan form upload
 menuArkas.addEventListener('click', () => {
+  hideAllSections();
   inputArkas.classList.remove('hidden');
+});
+
+// Klik menu LAPORAN BOS → tampilkan tabel BOS
+menuLaporanBos.addEventListener('click', (e) => {
+  e.preventDefault();
+  hideAllSections();
+  laporanSection.classList.remove('hidden');
 });
 
 // Fungsi simulasi upload
@@ -23,12 +40,10 @@ function simulateUpload(file) {
     progressBar.textContent = progress + '%';
 
     if (progress >= 100) {
-  clearInterval(interval);
-  result.classList.remove('hidden');
-
-  // tampilkan isi file Excel
-  displayData(file);
-}
+      clearInterval(interval);
+      result.classList.remove('hidden');
+      displayData(file); // tampilkan isi file Excel
+    }
   }, 300);
 }
 
@@ -47,6 +62,8 @@ dropArea.addEventListener('dragover', (e) => {
 dropArea.addEventListener('dragleave', () => {
   dropArea.classList.remove('bg-gray-200');
 });
+
+// Fungsi tampilkan isi file Excel
 function displayData(file) {
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -71,12 +88,9 @@ function displayData(file) {
       table += `<tr class="${idx % 2 === 0 ? 'bg-white text-black' : 'bg-gray-100 text-black'}">`;
       row.forEach(cell => {
         let value = cell;
-
-        // Jika cell berupa angka, format ribuan
         if (typeof cell === "number") {
-          value = cell.toLocaleString("id-ID"); 
+          value = cell.toLocaleString("id-ID"); // format ribuan
         }
-
         table += `<td class="border border-gray-400 px-2 py-1">${value}</td>`;
       });
       table += '</tr>';
@@ -91,12 +105,3 @@ function displayData(file) {
   };
   reader.readAsArrayBuffer(file);
 }
-const menuLaporanBos = document.querySelector('a[href="#laporan-bos"]');
-const laporanSection = document.getElementById('laporan-bos');
-
-menuLaporanBos.addEventListener('click', (e) => {
-  e.preventDefault();
-  laporanSection.classList.remove('hidden');
-  inputArkas.classList.add('hidden'); // sembunyikan form ARKAS
-});
-
