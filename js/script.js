@@ -1,16 +1,15 @@
 // LOGIN HANDLER
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.querySelector("form"); // ambil form login
+  const loginForm = document.querySelector("form");
   if (loginForm) {
     loginForm.addEventListener("submit", e => {
-      e.preventDefault(); // cegah POST ke server
-
+      e.preventDefault();
       const user = document.getElementById("username").value;
       const pass = document.getElementById("password").value;
 
       if (user === "admin" && pass === "1234") {
         localStorage.setItem("isLoggedIn", "true");
-        window.location.href = "dashboard.html"; // pindah ke dashboard
+        window.location.href = "dashboard.html";
       } else {
         alert("Username atau password salah!");
       }
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("submit", e => {
   if (e.target.id === "rkasForm") {
     e.preventDefault();
-
     const judul = document.getElementById("judulRkas").value;
     const file = document.getElementById("fileUpload").files[0]?.name || "Belum ada file";
 
@@ -69,10 +67,8 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
-if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-    alert("ID: saeful\nPassword: saeful");
-    localStorage.setItem('lastShownSaeful', now);
-}
+
+// EVENT LISTENER AKSI DENGAN PASSWORD
 document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
     const selected = e.target.value;
@@ -82,7 +78,6 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
       const now = Date.now();
 
       if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-        // ⬇️ Ganti prompt dengan baris ini
         pendingAction = selected;
         passwordModal.classList.remove('hidden'); // tampilkan modal password
       } else {
