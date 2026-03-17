@@ -91,16 +91,21 @@ function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
 
+  // format angka dengan ribuan
+  function formatAngka(val) {
+    return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
+  }
+
   laporanBody.innerHTML += `
     <tr>
       <td class="border px-2 py-1">${noUrut}</td>
       <td class="border px-2 py-1">${rowData[0] || '-'}</td>
       <td class="border px-2 py-1">${rowData[1] || '-'}</td>
-      <td class="border px-2 py-1">${rowData[2] || '-'}</td>
+      <td class="border px-2 py-1">${formatAngka(rowData[2])}</td>
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
-      <td class="border px-2 py-1">${rowData[4] || '-'}</td>
-      <td class="border px-2 py-1">${rowData[5] || '-'}</td>
-      <td class="border px-2 py-1">${rowData[6] || '-'}</td>
+      <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
+      <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
+      <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
       <!-- Kolom Kategori -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
@@ -111,7 +116,9 @@ function tambahLaporanBos(rowData) {
       <!-- Kolom Aksi -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>Aksi</option>
+          <option>Pilih</option>
+          <option>✏️ Edit</option>
+          <option>🗑️ Hapus</option>
         </select>
       </td>
     </tr>
@@ -120,18 +127,13 @@ function tambahLaporanBos(rowData) {
 
 // 🔐 Event listener dropdown Aksi
 document.getElementById('laporanBody').addEventListener('change', (e) => {
-  if (e.target.tagName === 'SELECT' && e.target.value === 'Aksi') {
-    const lastShown = localStorage.getItem('lastShownSaeful');
-    const now = Date.now();
-
-    if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-      pendingAction = { row: e.target.closest('tr') };
+  if (e.target.tagName === 'SELECT') {
+    const selected = e.target.value.trim();
+    if (selected === '✏️ Edit' || selected === '🗑️ Hapus') {
+      pendingAction = { action: selected, row: e.target.closest('tr') };
       passwordModal.classList.remove('hidden'); // tampilkan modal password
-    } else {
-      tampilkanDropdownAksi(e.target.closest('tr'));
+      e.target.selectedIndex = 0;
     }
-
-    e.target.selectedIndex = 0;
   }
 });
 
@@ -145,8 +147,7 @@ cancelBtn.addEventListener('click', () => {
 // tombol submit modal
 submitBtn.addEventListener('click', () => {
   if (passwordInput.value === "saeful") {
-    localStorage.setItem('lastShownSaeful', Date.now());
-    tampilkanDropdownAksi(pendingAction.row);
+    jalankanAksi(pendingAction.action, pendingAction.row);
     passwordModal.classList.add('hidden');
     passwordInput.value = "";
     pendingAction = null;
@@ -155,35 +156,15 @@ submitBtn.addEventListener('click', () => {
   }
 });
 
-// fungsi tampilkan dropdown Edit/Hapus
-function tampilkanDropdownAksi(row) {
-  const aksiCell = row.querySelectorAll('td')[9]; // kolom aksi
-  aksiCell.innerHTML = `
-    <select class="bg-blue-100 text-black rounded px-2 py-1">
-      <option>Pilih</option>
-      <option>✏️ Edit</option>
-      <option>🗑️ Hapus</option>
-    </select>
-  `;
-
-  aksiCell.querySelector('select').addEventListener('change', (e) => {
-    const selected = e.target.value.trim();
-    if (selected === "✏️ Edit" || selected === "🗑️ Hapus") {
-      jalankanAksi(selected, row);
-      e.target.selectedIndex = 0;
-    }
-  });
-}
-
 // fungsi aksi edit/hapus
 function jalankanAksi(action, row) {
   if (action === "✏️ Edit") {
     const cells = row.querySelectorAll('td');
     const kodeRek = cells[1].textContent;
     const uraian = cells[2].textContent;
-    const vol = cells[3].textContent;
+    const vol = cells[3].textContent.replace(/\./g,'').replace(/,/g,''); // ambil angka mentah
     const sat = cells[4].textContent;
-    const hSat = cells[5].textContent;
+    const hSat = cells[5].textContent.replace(/\./g,'').replace(/,/g,'');
 
     // tampilkan form edit di bawah baris
     row.insertAdjacentHTML('afterend', `
@@ -215,9 +196,9 @@ function jalankanAksi(action, row) {
     document.getElementById('saveEdit').addEventListener('click', () => {
       cells[1].textContent = document.getElementById('editKode').value;
       cells[2].textContent = document.getElementById('editUraian').value;
-      cells[3].textContent = document.getElementById('editVol').value;
+      cells[3].textContent = parseFloat(document.getElementById('editVol').value).toLocaleString("id-ID");
       cells[4].textContent = document.getElementById('editSat').value;
-      cells[5].textContent = document.getElementById('editHsat').value;
+      cells[5].textContent = parseFloat(document.getElementById('editHsat').value).toLocaleString("id-ID");
       updateJumlah();
       row.nextElementSibling.remove(); // hapus form edit
     });
