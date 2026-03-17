@@ -91,3 +91,50 @@ function displayData(file) {
   };
   reader.readAsArrayBuffer(file);
 }
+const btnSimpan = document.getElementById('btnSimpan');
+const laporanBody = document.getElementById('laporanBody');
+const laporanSection = document.getElementById('laporan-bos');
+
+btnSimpan.addEventListener('click', () => {
+  // Ambil data dari tabel hasil upload (rows)
+  const rows = document.querySelectorAll('#result table tbody tr');
+
+  rows.forEach((row, idx) => {
+    const cells = row.querySelectorAll('td');
+    if (cells.length > 0) {
+      const uraian = cells[0].innerText; // contoh: ambil kolom pertama sebagai uraian
+      const vol = cells[1]?.innerText || "";
+      const sat = cells[2]?.innerText || "";
+      const hSat = cells[3]?.innerText || "";
+      const nominal = cells[4]?.innerText || "";
+
+      // Tambahkan baris ke Laporan BOS
+      laporanBody.innerHTML += `
+        <tr>
+          <td class="border px-2 py-1">${idx + 1}</td>
+          <td class="border px-2 py-1">${uraian}</td>
+          <td class="border px-2 py-1">${vol}</td>
+          <td class="border px-2 py-1">${sat}</td>
+          <td class="border px-2 py-1">${hSat}</td>
+          <td class="border px-2 py-1">${nominal}</td>
+          <td class="border px-2 py-1">
+            <select class="bg-blue-100 text-black rounded px-2 py-1">
+              <option>Masuk</option>
+              <option>Keluar</option>
+            </select>
+          </td>
+          <td class="border px-2 py-1">Rp 0</td>
+          <td class="border px-2 py-1">
+            <select class="bg-blue-100 text-black rounded px-2 py-1">
+              <option>✏️ Edit</option>
+              <option>🗑️ Hapus</option>
+            </select>
+          </td>
+        </tr>
+      `;
+    }
+  });
+
+  // Tampilkan section Laporan BOS
+  laporanSection.classList.remove('hidden');
+});
