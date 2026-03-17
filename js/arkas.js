@@ -179,16 +179,34 @@ function jalankanAksi(action, row) {
     const hSat = cells[5].textContent.replace(/\./g,'').replace(/,/g,'');
 
     // tampilkan form edit di bawah baris
-    row.insertAdjacentHTML('afterend', `
+   row.insertAdjacentHTML('afterend', `
       <tr class="bg-yellow-100">
         <td colspan="10">
-          <div class="p-2 space-x-2">
-            <label>Kode Rek: <input id="editKode" value="${kodeRek}" class="border px-2 py-1"></label>
-            <label>Uraian: <input id="editUraian" value="${uraian}" class="border px-2 py-1"></label>
-            <label>Vol: <input id="editVol" type="number" value="${vol}" class="border px-2 py-1"></label>
-            <label>Sat: <input id="editSat" value="${sat}" class="border px-2 py-1"></label>
-            <label>H.Sat: <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1"></label>
-            <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">Simpan</button>
+          <div class="p-2 space-x-2 text-gray-800">
+            <label>Kode Rek: 
+              <input id="editKode" value="${kodeRek}" 
+                     class="border px-2 py-1 text-gray-800">
+            </label>
+            <label>Uraian: 
+              <input id="editUraian" value="${uraian}" 
+                     class="border px-2 py-1 text-gray-800">
+            </label>
+            <label>Vol: 
+              <input id="editVol" type="number" value="${vol}" 
+                     class="border px-2 py-1 text-gray-800">
+            </label>
+            <label>Sat: 
+              <input id="editSat" value="${sat}" 
+                     class="border px-2 py-1 text-gray-800">
+            </label>
+            <label>H.Sat: 
+              <input id="editHsat" type="number" value="${hSat}" 
+                     class="border px-2 py-1 text-gray-800">
+            </label>
+            <button id="saveEdit" 
+                    class="bg-green-500 text-white px-3 py-1 rounded">
+              Simpan
+            </button>
           </div>
         </td>
       </tr>
