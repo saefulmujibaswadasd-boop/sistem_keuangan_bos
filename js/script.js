@@ -73,7 +73,7 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
     const selected = e.target.value;
 
-    if (selected.includes('Edit') || selected.includes('Hapus')) {
+    if (selected.includes('✏️') || selected.includes('🗑️')) {
       const lastShown = localStorage.getItem('lastShownSaeful');
       const now = Date.now();
 
