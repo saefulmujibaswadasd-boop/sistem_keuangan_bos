@@ -59,6 +59,7 @@ fileInput.addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) simulateUpload(file);
 });
+
 // Event drag & drop
 dropArea.addEventListener('dragover', (e) => {
   e.preventDefault();
@@ -132,8 +133,8 @@ function tambahLaporanBos(rowData) {
       </td>
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>✏️</option>
-          <option>🗑️</option>
+          <option>✏️ Edit</option>
+          <option>🗑️ Hapus</option>
         </select>
       </td>
     </tr>
@@ -161,6 +162,13 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
   }
 });
 
+// tombol batal
+cancelBtn.addEventListener('click', () => {
+  passwordModal.classList.add('hidden');
+  passwordInput.value = "";
+  pendingAction = null;
+});
+
 // tombol submit modal
 submitBtn.addEventListener('click', () => {
   if (passwordInput.value === "saeful") {
@@ -178,7 +186,6 @@ submitBtn.addEventListener('click', () => {
 // fungsi aksi edit/hapus
 function jalankanAksi(action, row) {
   if (action === "✏️ Edit") {
-    // ambil data dari baris
     const cells = row.querySelectorAll('td');
     const kodeRek = cells[1].textContent;
     const uraian = cells[2].textContent;
@@ -186,45 +193,44 @@ function jalankanAksi(action, row) {
     const sat = cells[4].textContent;
     const hSat = cells[5].textContent;
 
-    // tampilkan form edit di bawah baris
-    row.insertAdjacentHTML('afterend', `
-      <tr class="bg-yellow-100">
-        <td colspan="10">
-          <div class="p-2">
-            <label>Kode Rek: <input id="editKode" value="${kodeRek}" class="border px-2 py-1"></label>
-            <label>Uraian: <input id="editUraian" value="${uraian}" class="border px-2 py-1"></label>
-            <label>Vol: <input id="editVol" type="number" value="${vol}" class="border px-2 py-1"></label>
-            <label>Sat: <input id="editSat" value="${sat}" class="border px-2 py-1"></label>
-            <label>H.Sat: <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1"></label>
-            <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">Simpan</button>
-          </div>
-        </td>
-      </tr>
-    `);
+   // tampilkan form edit di bawah baris
+row.insertAdjacentHTML('afterend', `
+  <tr class="bg-yellow-100">
+    <td colspan="10">
+      <div class="p-2 space-x-2">
+        <label>Kode Rek: <input id="editKode" value="${kodeRek}" class="border px-2 py-1"></label>
+        <label>Uraian: <input id="editUraian" value="${uraian}" class="border px-2 py-1"></label>
+        <label>Vol: <input id="editVol" type="number" value="${vol}" class="border px-2 py-1"></label>
+        <label>Sat: <input id="editSat" value="${sat}" class="border px-2 py-1"></label>
+        <label>H.Sat: <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1"></label>
+        <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">Simpan</button>
+      </div>
+    </td>
+  </tr>
+`);
 
-    // hitung otomatis Jumlah saat Vol/H.Sat berubah
-    document.getElementById('editVol').addEventListener('input', updateJumlah);
-    document.getElementById('editHsat').addEventListener('input', updateJumlah);
+// hitung otomatis Jumlah saat Vol/H.Sat berubah
+document.getElementById('editVol').addEventListener('input', updateJumlah);
+document.getElementById('editHsat').addEventListener('input', updateJumlah);
 
-    function updateJumlah() {
-      const volVal = parseFloat(document.getElementById('editVol').value) || 0;
-      const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
-      cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
-    }
+function updateJumlah() {
+  const volVal = parseFloat(document.getElementById('editVol').value) || 0;
+  const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
+  cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
+}
 
-    // tombol simpan edit
-    document.getElementById('saveEdit').addEventListener('click', () => {
-      cells[1].textContent = document.getElementById('editKode').value;
-      cells[2].textContent = document.getElementById('editUraian').value;
-      cells[3].textContent = document.getElementById('editVol').value;
-      cells[4].textContent = document.getElementById('editSat').value;
-      cells[5].textContent = document.getElementById('editHsat').value;
-      updateJumlah();
-      // hapus form edit
-      row.nextElementSibling.remove();
-    });
+// tombol simpan edit
+document.getElementById('saveEdit').addEventListener('click', () => {
+  cells[1].textContent = document.getElementById('editKode').value;
+  cells[2].textContent = document.getElementById('editUraian').value;
+  cells[3].textContent = document.getElementById('editVol').value;
+  cells[4].textContent = document.getElementById('editSat').value;
+  cells[5].textContent = document.getElementById('editHsat').value;
+  updateJumlah();
+  row.nextElementSibling.remove(); // hapus form edit
+});
 
-  } else if (action === "🗑️ Hapus") {
-    row.remove(); // langsung hapus baris
-  }
+} else if (action === "🗑️ Hapus") {
+  row.remove(); // langsung hapus baris
+}
 }
