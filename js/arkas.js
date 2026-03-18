@@ -75,10 +75,8 @@ function displayData(file) {
   reader.onload = function(e) {
     const data = new Uint8Array(e.target.result);
     const workbook = XLSX.read(data, { type: 'array' });
-
     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
     const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1, defval: "" });
-
     rows.slice(1).forEach((row) => {
       tambahLaporanBos(row);
     });
@@ -90,13 +88,10 @@ function displayData(file) {
 function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
-const jumlah = volVal * hSatVal;
-  // Jumlah ada di index 7
+  const jumlah = volVal * hSatVal;
   cells[7].textContent = jumlah.toLocaleString("id-ID");
-  // Total ada di index 9
   cells[9].textContent = jumlah.toLocaleString("id-ID");
 }
-
 
   function formatAngka(val) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
