@@ -252,12 +252,22 @@ function updateJumlah(cells) {
   const kategoriSelect = cells[7].querySelector('select');
   const kategori = kategoriSelect ? kategoriSelect.value : "Masuk";
 
-  // Total ada di index 8
-  if (kategori === "Masuk") {
-    cells[8].textContent = jumlah.toLocaleString("id-ID");
-  } else if (kategori === "Keluar") {
-    cells[8].textContent = (-jumlah).toLocaleString("id-ID");
+ // Total ada di index 8
+  let totalAwal = 0;
+  if (cells[8].textContent && cells[8].textContent !== "-") {
+    totalAwal = parseFloat(cells[8].textContent.replace(/\./g,'').replace(/,/g,'')) || 0;
   }
+
+  let totalBaru = 0;
+  if (kategori === "Masuk") {
+    totalBaru = totalAwal + jumlah;
+  } else if (kategori === "Keluar") {
+    totalBaru = totalAwal - jumlah;
+  }
+
+  cells[8].textContent = totalBaru.toLocaleString("id-ID");
 }
+
+
 
 
