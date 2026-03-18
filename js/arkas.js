@@ -252,12 +252,15 @@ function updateJumlah(cells) {
   const kategoriSelect = cells[7].querySelector('select');
   const kategori = kategoriSelect ? kategoriSelect.value : "Masuk";
 
- // Total ada di index 8
+ // ambil total awal dari baris sebelumnya
   let totalAwal = 0;
-  if (cells[8].textContent && cells[8].textContent !== "-") {
-    totalAwal = parseFloat(cells[8].textContent.replace(/\./g,'').replace(/,/g,'')) || 0;
+  const prevRow = cells[0].parentElement.previousElementSibling;
+  if (prevRow) {
+    const prevTotalCell = prevRow.querySelectorAll('td')[8];
+    totalAwal = parseFloat(prevTotalCell.textContent.replace(/\./g,'').replace(/,/g,'')) || 0;
   }
 
+  // hitung total baru
   let totalBaru = 0;
   if (kategori === "Masuk") {
     totalBaru = totalAwal + jumlah;
@@ -265,8 +268,10 @@ function updateJumlah(cells) {
     totalBaru = totalAwal - jumlah;
   }
 
+  // Total ada di index 8
   cells[8].textContent = totalBaru.toLocaleString("id-ID");
 }
+
 
 
 
