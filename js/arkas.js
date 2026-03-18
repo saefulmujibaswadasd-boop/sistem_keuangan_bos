@@ -217,17 +217,21 @@ function jalankanAksi(action, row) {
           </div>
         </td>
       </tr>
-    `);
+    ');
 
     // hitung otomatis Jumlah saat Vol/H.Sat berubah
     document.getElementById('editVol').addEventListener('input', updateJumlah);
     document.getElementById('editHsat').addEventListener('input', updateJumlah);
 
-    function updateJumlah() {
-      const volVal = parseFloat(document.getElementById('editVol').value) || 0;
-      const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
-      cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
-    }
+   function updateJumlah() {
+  const volVal = parseFloat(document.getElementById('editVol').value) || 0;
+  const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
+  const jumlah = volVal * hSatVal;
+
+  // Jumlah ada di index 7
+  cells[7].textContent = jumlah.toLocaleString("id-ID");
+  // Total ada di index 9
+  cells[9].textContent = jumlah.toLocaleString("id-ID");
 
     // tombol simpan edit
     document.getElementById('saveEdit').addEventListener('click', () => {
