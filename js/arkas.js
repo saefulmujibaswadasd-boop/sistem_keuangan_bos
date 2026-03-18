@@ -247,6 +247,15 @@ function updateJumlah(cells) {
 
   // Jumlah ada di index 7
   cells[7].textContent = jumlah.toLocaleString("id-ID");
+
+  // Kategori ada di index 8
+  const kategoriSelect = cells[8].querySelector('select');
+  const kategori = kategoriSelect ? kategoriSelect.value : "Masuk";
+
   // Total ada di index 9
-  cells[9].textContent = jumlah.toLocaleString("id-ID");
+  if (kategori === "Masuk") {
+    cells[9].textContent = jumlah.toLocaleString("id-ID");
+  } else if (kategori === "Keluar") {
+    cells[9].textContent = (-jumlah).toLocaleString("id-ID");
+  }
 }
