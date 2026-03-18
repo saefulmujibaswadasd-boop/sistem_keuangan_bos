@@ -93,44 +93,56 @@ function tambahLaporanBos(rowData) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
   }
 
-  const volVal = parseFloat(rowData[2]) || 0;
-  const hSatVal = parseFloat(rowData[4]) || 0;
-  const jumlah = volVal * hSatVal;
+  // ambil total terakhir dari baris sebelumnya
+  let totalAwal = 0;
+  const lastRow = laporanBody.querySelector("tr:last-child td:nth-child(9)");
+  if (lastRow) {
+    totalAwal = parseFloat(lastRow.textContent.replace(/\./g,'').replace(/,/g,'')) || 0;
+  }
+
+  // default kategori = Masuk
+  const kategori = "Masuk";
+  let totalBaru = (kategori === "Masuk") ? totalAwal + jumlah : totalAwal - jumlah;
 
   laporanBody.innerHTML += `
     <tr>
-      <td class="border px-2 py-1">${noUrut}</td>
-      <td class="border px-2 py-1">${rowData[0] || '-'}</td>
-      <td class="border px-2 py-1">${rowData[1] || '-'}</td>
-      <td class="border px-2 py-1">${formatAngka(rowData[2])}</td>
-      <td class="border px-2 py-1">${rowData[3] || '-'}</td>
-      <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
-      <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
+      <td>${noUrut}</td>
+      <td>${rowData[0] || '-'}</td>
+      <td>${rowData[1] || '-'}</td>
+      <td>${formatAngka(rowData[2])}</td>
+      <td>${rowData[3] || '-'}</td>
+      <td>${formatAngka(rowData[4])}</td>
+      <!-- Jumlah -->
+      <td>${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
       <!-- Kategori -->
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>Masuk</option>
+      <td>
+        <select>
+          <option ${kategori === "Masuk" ? "selected" : ""}>Masuk</option>
           <option>Keluar</option>
+        </select>
+      </td>
       <!-- Total -->
-      <td class="border px-2 py-1">${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
+      <td>${totalBaru.toLocaleString("id-ID")}</td>
       <!-- Aksi -->
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
+      <td>
+        <select>
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
+        </select>
       </td>
       <!-- Triwulan -->
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
+      <td>
+        <select>
           <option>I</option>
           <option>II</option>
           <option>III</option>
           <option>IV</option>
+        </select>
       </td>
       <!-- Administrasi -->
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
+      <td>
+        <select>
           <option>Kwitansi</option>
           <option>Dinas</option>
           <option>Nota</option>
