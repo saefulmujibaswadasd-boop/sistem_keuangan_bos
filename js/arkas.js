@@ -88,14 +88,14 @@ function displayData(file) {
 function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
-  const jumlah = volVal * hSatVal;
-  cells[7].textContent = jumlah.toLocaleString("id-ID");
-  cells[9].textContent = jumlah.toLocaleString("id-ID");
-}
 
   function formatAngka(val) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
   }
+
+  const volVal = parseFloat(rowData[2]) || 0;
+  const hSatVal = parseFloat(rowData[4]) || 0;
+  const jumlah = volVal * hSatVal;
 
   laporanBody.innerHTML += `
     <tr>
@@ -106,16 +106,26 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
+      <!-- Jumlah -->
+      <td class="border px-2 py-1">${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
+      <!-- Kategori -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Masuk</option>
           <option>Keluar</option>
-      <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
+        </select>
+      </td>
+      <!-- Total -->
+      <td class="border px-2 py-1">${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
+      <!-- Aksi -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
+        </select>
+      </td>
+      <!-- Triwulan -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>I</option>
@@ -123,15 +133,18 @@ function tambahLaporanBos(rowData) {
           <option>III</option>
           <option>IV</option>
         </select>
-     <td class="border px-2 py-1">
+      </td>
+      <!-- Administrasi -->
+      <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Kwitansi</option>
           <option>Dinas</option>
           <option>Nota</option>
           <option>Lainnya</option>
         </select>
-        </tr>
-`;
+      </td>
+    </tr>
+  `;
 }
 
 // 🔐 Event listener dropdown Aksi
@@ -142,12 +155,11 @@ document.getElementById('laporanBody').addEventListener('change', (e) => {
       const lastShown = localStorage.getItem('lastShownSaeful');
       const now = Date.now();
 
-      // cek apakah sudah lewat 1 jam
       if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
         pendingAction = { action: selected, row: e.target.closest('tr') };
-        passwordModal.classList.remove('hidden'); // tampilkan modal password
+        passwordModal.classList.remove('hidden');
       } else {
-        jalankanAksi(selected, e.target.closest('tr')); // langsung jalankan
+        jalankanAksi(selected, e.target.closest('tr'));
       }
 
       e.target.selectedIndex = 0;
@@ -165,9 +177,7 @@ cancelBtn.addEventListener('click', () => {
 // tombol submit modal
 submitBtn.addEventListener('click', () => {
   if (passwordInput.value === "saeful") {
-    // simpan waktu terakhir password benar
     localStorage.setItem('lastShownSaeful', Date.now());
-
     jalankanAksi(pendingAction.action, pendingAction.row);
     passwordModal.classList.add('hidden');
     passwordInput.value = "";
@@ -183,37 +193,31 @@ function jalankanAksi(action, row) {
     const cells = row.querySelectorAll('td');
     const kodeRek = cells[1].textContent;
     const uraian = cells[2].textContent;
-    const vol = cells[3].textContent.replace(/\./g,'').replace(/,/g,''); // ambil angka mentah
+    const vol = cells[3].textContent.replace(/\./g,'').replace(/,/g,'');
     const sat = cells[4].textContent;
     const hSat = cells[5].textContent.replace(/\./g,'').replace(/,/g,'');
 
     // tampilkan form edit di bawah baris
-   row.insertAdjacentHTML('afterend', `
+    row.insertAdjacentHTML('afterend', `
       <tr class="bg-yellow-100">
-        <td colspan="10">
+        <td colspan="13">
           <div class="p-2 space-x-2 text-gray-800">
             <label>Kode Rek: 
-              <input id="editKode" value="${kodeRek}" 
-                     class="border px-2 py-1 text-gray-800">
+              <input id="editKode" value="${kodeRek}" class="border px-2 py-1 text-gray-800">
             </label>
             <label>Uraian: 
-              <input id="editUraian" value="${uraian}" 
-                     class="border px-2 py-1 text-gray-800">
+              <input id="editUraian" value="${uraian}" class="border px-2 py-1 text-gray-800">
             </label>
             <label>Vol: 
-              <input id="editVol" type="number" value="${vol}" 
-                     class="border px-2 py-1 text-gray-800">
+              <input id="editVol" type="number" value="${vol}" class="border px-2 py-1 text-gray-800">
             </label>
             <label>Sat: 
-              <input id="editSat" value="${sat}" 
-                     class="border px-2 py-1 text-gray-800">
+              <input id="editSat" value="${sat}" class="border px-2 py-1 text-gray-800">
             </label>
             <label>H.Sat: 
-              <input id="editHsat" type="number" value="${hSat}" 
-                     class="border px-2 py-1 text-gray-800">
+              <input id="editHsat" type="number" value="${hSat}" class="border px-2 py-1 text-gray-800">
             </label>
-            <button id="saveEdit" 
-                    class="bg-green-500 text-white px-3 py-1 rounded">
+            <button id="saveEdit" class="bg-green-500 text-white px-3 py-1 rounded">
               Simpan
             </button>
           </div>
@@ -221,15 +225,9 @@ function jalankanAksi(action, row) {
       </tr>
     `);
 
-    // hitung otomatis Jumlah saat Vol/H.Sat berubah
-    document.getElementById('editVol').addEventListener('input', updateJumlah);
-    document.getElementById('editHsat').addEventListener('input', updateJumlah);
-
-    function updateJumlah() {
-      const volVal = parseFloat(document.getElementById('editVol').value) || 0;
-      const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
-      cells[6].textContent = (volVal * hSatVal).toLocaleString("id-ID");
-    }
+    // hitung otomatis Jumlah & Total saat Vol/H.Sat berubah
+    document.getElementById('editVol').addEventListener('input', () => updateJumlah(cells));
+    document.getElementById('editHsat').addEventListener('input', () => updateJumlah(cells));
 
     // tombol simpan edit
     document.getElementById('saveEdit').addEventListener('click', () => {
@@ -238,11 +236,23 @@ function jalankanAksi(action, row) {
       cells[3].textContent = parseFloat(document.getElementById('editVol').value).toLocaleString("id-ID");
       cells[4].textContent = document.getElementById('editSat').value;
       cells[5].textContent = parseFloat(document.getElementById('editHsat').value).toLocaleString("id-ID");
-      updateJumlah();
+      updateJumlah(cells); // otomatis update Jumlah + Total
       row.nextElementSibling.remove(); // hapus form edit
     });
 
   } else if (action === "🗑️ Hapus") {
     row.remove(); // langsung hapus baris
   }
+}
+
+// fungsi update jumlah & total
+function updateJumlah(cells) {
+  const volVal = parseFloat(document.getElementById('editVol').value) || 0;
+  const hSatVal = parseFloat(document.getElementById('editHsat').value) || 0;
+  const jumlah = volVal * hSatVal;
+
+  // Jumlah ada di index 7
+  cells[7].textContent = jumlah.toLocaleString("id-ID");
+  // Total ada di index 9
+  cells[9].textContent = jumlah.toLocaleString("id-ID");
 }
