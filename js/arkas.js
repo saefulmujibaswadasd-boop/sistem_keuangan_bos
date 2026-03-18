@@ -90,6 +90,13 @@ function displayData(file) {
 function tambahLaporanBos(rowData) {
   const laporanBody = document.getElementById('laporanBody');
   const noUrut = laporanBody.querySelectorAll('tr').length + 1;
+const jumlah = volVal * hSatVal;
+  // Jumlah ada di index 7
+  cells[7].textContent = jumlah.toLocaleString("id-ID");
+  // Total ada di index 9
+  cells[9].textContent = jumlah.toLocaleString("id-ID");
+}
+
 
   function formatAngka(val) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
