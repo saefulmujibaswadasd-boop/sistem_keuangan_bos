@@ -93,6 +93,11 @@ function tambahLaporanBos(rowData) {
     return val && !isNaN(val) ? parseFloat(val).toLocaleString("id-ID") : val || '-';
   }
 
+  // hitung jumlah dari Vol × H.Sat
+  const volVal = parseFloat(rowData[2]) || 0;
+  const hSatVal = parseFloat(rowData[4]) || 0;
+  const jumlah = volVal * hSatVal;
+
   // ambil total terakhir dari baris sebelumnya
   let totalAwal = 0;
   const lastRow = laporanBody.querySelector("tr:last-child td:nth-child(9)");
@@ -272,17 +277,13 @@ function updateJumlah(cells) {
     totalAwal = parseFloat(prevTotalCell.textContent.replace(/\./g,'').replace(/,/g,'')) || 0;
   }
 
-  // hitung total baru
-  let totalBaru = 0;
-  if (kategori === "Masuk") {
-    totalBaru = totalAwal + jumlah;
-  } else if (kategori === "Keluar") {
-    totalBaru = totalAwal - jumlah;
-  }
+ // hitung total baru
+  let totalBaru = (kategori === "Masuk") ? totalAwal + jumlah : totalAwal - jumlah;
 
   // Total ada di index 8
   cells[8].textContent = totalBaru.toLocaleString("id-ID");
 }
+
 
 
 
