@@ -114,9 +114,7 @@ function tambahLaporanBos(rowData) {
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
-        </select>
-      <td class="border px-2 py-1">
-      <td class="border px-2 py-1">
+        <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>I</option>
           <option>II</option>
