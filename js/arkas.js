@@ -104,27 +104,18 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
-      <!-- Jumlah -->
       <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
-      <!-- Kategori (geser ke kanan) -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Masuk</option>
           <option>Keluar</option>
-        </select>
-      </td>
-      <!-- Aksi -->
-      <td class="border px-2 py-1">
+       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
-                    </select>
-      </td>
-      </td>
-      <!-- Total -->
-      <td class="border px-2 py-1">-</td>
-      <!-- Triwulan -->
+        </select>
+      <td class="border px-2 py-1">
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>I</option>
@@ -132,9 +123,7 @@ function tambahLaporanBos(rowData) {
           <option>III</option>
           <option>IV</option>
         </select>
-      </td>
-      <!-- Administrasi -->
-      <td class="border px-2 py-1">
+     <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Kwitansi</option>
           <option>Dinas</option>
