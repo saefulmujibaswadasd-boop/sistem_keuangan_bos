@@ -104,17 +104,17 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
-      <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Masuk</option>
           <option>Keluar</option>
-       <td class="border px-2 py-1">
+      <td class="border px-2 py-1">${formatAngka(rowData[6])}</td>
+      <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
-        <td class="border px-2 py-1">
+      <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>I</option>
           <option>II</option>
