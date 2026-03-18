@@ -113,6 +113,15 @@ function tambahLaporanBos(rowData) {
           <option>Keluar</option>
         </select>
       </td>
+      <!-- Aksi -->
+      <td class="border px-2 py-1">
+        <select class="bg-blue-100 text-black rounded px-2 py-1">
+          <option>Pilih</option>
+          <option>✏️ Edit</option>
+          <option>🗑️ Hapus</option>
+                    </select>
+      </td>
+      </td>
       <!-- Total -->
       <td class="border px-2 py-1">-</td>
       <!-- Triwulan -->
@@ -132,17 +141,8 @@ function tambahLaporanBos(rowData) {
           <option>Nota</option>
           <option>Lainnya</option>
         </select>
-      </td>
-      <!-- Aksi -->
-      <td class="border px-2 py-1">
-        <select class="bg-blue-100 text-black rounded px-2 py-1">
-          <option>Pilih</option>
-          <option>✏️ Edit</option>
-          <option>🗑️ Hapus</option>
-        </select>
-      </td>
-    </tr>
-  `;
+        </tr>
+`;
 }
 
 // 🔐 Event listener dropdown Aksi
