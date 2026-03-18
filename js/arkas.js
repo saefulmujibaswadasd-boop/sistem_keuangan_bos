@@ -106,8 +106,6 @@ function tambahLaporanBos(rowData) {
       <td class="border px-2 py-1">${rowData[3] || '-'}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[4])}</td>
       <td class="border px-2 py-1">${formatAngka(rowData[5])}</td>
-      <!-- Jumlah -->
-      <td class="border px-2 py-1">
       <!-- Kategori -->
       <td class="border px-2 py-1">
         <select class="bg-blue-100 text-black rounded px-2 py-1">
