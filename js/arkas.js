@@ -113,8 +113,6 @@ function tambahLaporanBos(rowData) {
         <select class="bg-blue-100 text-black rounded px-2 py-1">
           <option>Masuk</option>
           <option>Keluar</option>
-        </select>
-      </td>
       <!-- Total -->
       <td class="border px-2 py-1">${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
       <!-- Aksi -->
@@ -123,7 +121,6 @@ function tambahLaporanBos(rowData) {
           <option>Pilih</option>
           <option>✏️ Edit</option>
           <option>🗑️ Hapus</option>
-        </select>
       </td>
       <!-- Triwulan -->
       <td class="border px-2 py-1">
@@ -132,7 +129,6 @@ function tambahLaporanBos(rowData) {
           <option>II</option>
           <option>III</option>
           <option>IV</option>
-        </select>
       </td>
       <!-- Administrasi -->
       <td class="border px-2 py-1">
