@@ -106,57 +106,47 @@ function tambahLaporanBos(rowData) {
   const kategori = "Masuk";
   let totalBaru = totalAwal + jumlah;
 
-  laporanBody.innerHTML += `
-    <tr>
-      <td>${noUrut}</td>
-      <td>${rowData[0] || '-'}</td>
-      <td>${rowData[1] || '-'}</td>
-      <td>${formatAngka(rowData[2])}</td>
-      <td>${rowData[3] || '-'}</td>
-      <td>${formatAngka(rowData[4])}</td>
-      <!-- Jumlah -->
-      <td>${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
-      <!-- Kategori -->
-      <td>
-        <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
-                       focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <option ${kategori === "Masuk" ? "selected" : ""}>Masuk</option>
-          <option>Keluar</option>
-        </select>
-      </td>
-      <!-- Total -->
-      <td>${totalBaru.toLocaleString("id-ID")}</td>
-      <!-- Aksi -->
-      <td>
-        <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
-                       focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <option>Pilih</option>
-          <option>✏️ Edit</option>
-          <option>🗑️ Hapus</option>
-        </select>
-      </td>
-      <!-- Triwulan -->
-      <td>
-        <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
-                       focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <option>I</option>
-          <option>II</option>
-          <option>III</option>
-          <option>IV</option>
-        </select>
-      </td>
-      <!-- Administrasi -->
-      <td>
-        <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
-                       focus:outline-none focus:ring-2 focus:ring-blue-400">
-          <option>Kwitansi</option>
-          <option>Dinas</option>
-          <option>Nota</option>
-          <option>Lainnya</option>
-        </select>
-      </td>
-    </tr>
-  `;
+ laporanBody.innerHTML += `
+  <tr>
+    <td class="border border-gray-500 px-2 py-1">${noUrut}</td>
+    <td class="border border-gray-500 px-2 py-1">${rowData[0] || '-'}</td>
+    <td class="border border-gray-500 px-2 py-1">${rowData[1] || '-'}</td>
+    <td class="border border-gray-500 px-2 py-1">${formatAngka(rowData[2])}</td>
+    <td class="border border-gray-500 px-2 py-1">${rowData[3] || '-'}</td>
+    <td class="border border-gray-500 px-2 py-1">${formatAngka(rowData[4])}</td>
+    <td class="border border-gray-500 px-2 py-1">${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
+    <td class="border border-gray-500 px-2 py-1">
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Masuk</option>
+        <option>Keluar</option>
+      </select>
+    </td>
+    <td class="border border-gray-500 px-2 py-1">${totalBaru.toLocaleString("id-ID")}</td>
+    <td class="border border-gray-500 px-2 py-1">
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Pilih</option>
+        <option>✏️ Edit</option>
+        <option>🗑️ Hapus</option>
+      </select>
+    </td>
+    <td class="border border-gray-500 px-2 py-1">
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>I</option>
+        <option>II</option>
+        <option>III</option>
+        <option>IV</option>
+      </select>
+    </td>
+    <td class="border border-gray-500 px-2 py-1">
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Kwitansi</option>
+        <option>Dinas</option>
+        <option>Nota</option>
+        <option>Lainnya</option>
+      </select>
+    </td>
+  </tr>
+`;
 }
 
 // 🔐 Event listener dropdown Aksi
