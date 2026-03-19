@@ -119,44 +119,47 @@ function tambahLaporanBos(rowData) {
       <td>${formatAngka(rowData[4])}</td>
       <!-- Jumlah -->
       <td>${jumlah ? jumlah.toLocaleString("id-ID") : '-'}</td>
-      <!-- Kategori -->
-      <td>
-        <select>
-          <option ${kategori === "Masuk" ? "selected" : ""}>Masuk</option>
-          <option>Keluar</option>
-        </select>
-      </td>
-      <!-- Total -->
-      <td>${totalBaru.toLocaleString("id-ID")}</td>
-      <!-- Aksi -->
-      <td>
-        <select>
-          <option>Pilih</option>
-          <option>✏️ Edit</option>
-          <option>🗑️ Hapus</option>
-        </select>
-      </td>
-      <!-- Triwulan -->
-      <td>
-        <select>
-          <option>I</option>
-          <option>II</option>
-          <option>III</option>
-          <option>IV</option>
-        </select>
-      </td>
-      <!-- Administrasi -->
-      <td>
-        <select>
-          <option>Kwitansi</option>
-          <option>Dinas</option>
-          <option>Nota</option>
-          <option>Lainnya</option>
-        </select>
-      </td>
-    </tr>
-  `;
-}
+     !-- Kategori -->
+    <td>
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
+                     focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Masuk</option>
+        <option>Keluar</option>
+      </select>
+    </td>
+    <!-- Total -->
+    <td>${totalBaru.toLocaleString("id-ID")}</td>
+    <!-- Aksi -->
+    <td>
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
+                     focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Pilih</option>
+        <option>✏️ Edit</option>
+        <option>🗑️ Hapus</option>
+      </select>
+    </td>
+    <!-- Triwulan -->
+    <td>
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
+                     focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>I</option>
+        <option>II</option>
+        <option>III</option>
+        <option>IV</option>
+      </select>
+    </td>
+    <!-- Administrasi -->
+    <td>
+      <select class="bg-blue-600 border border-blue-700 text-white rounded px-2 py-1 
+                     focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <option>Kwitansi</option>
+        <option>Dinas</option>
+        <option>Nota</option>
+        <option>Lainnya</option>
+      </select>
+    </td>
+  </tr>
+`;
 
 // 🔐 Event listener dropdown Aksi
 document.getElementById('laporanBody').addEventListener('change', (e) => {
