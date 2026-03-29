@@ -19,14 +19,20 @@
       <img src="assets/logo_ramah.png" alt="Ramah" class="w-12 h-12 object-contain">
       <img src="assets/logo_sekolah.png" alt="Logo Sekolah" class="w-12 h-12 object-contain">
     </div>
-    <h1 class="text-2xl md:text-3xl py-12 font-extrabold text-gray-300 tracking-wide text-center">
+    <h1 class="text-2xl md:text-1xl py-5 font-extrabold text-gray-300 tracking-wide text-center">
       SIPLAH SD NEGERI WONOKERTO
     </h1>
-  </header>
- 
-  <section id="laporan-siplah" class="mt-6">
- <h1 class="text-lg font-bold mt-6 mb-2 text-green-800">Ringkasan Per Triwulan</h1>
-   <table class="table-auto border-collapse border border-gray-500 w-full text-sm text-white">
+   <!-- Tulisan Kembali ke Menu -->
+  <div class="text-center">
+    <a href="dashboard.html" class="text-gray-200 hover:text-yellow-300 font-semibold">
+      Kembali ke Menu
+    </a>
+  </div>
+</header>
+
+ <section id="laporan-siplah" class="mt-6">
+  <h1 class="text-lg font-bold mt-6 mb-2 text-green-800">Ringkasan Per Triwulan</h1>
+  <table class="table-auto border-collapse border border-gray-500 w-full text-sm text-white">
     <thead class="bg-green-800 text-white font-bold">
       <tr>
         <th class="border border-gray-500 px-2 py-1">Triwulan</th>
@@ -36,12 +42,23 @@
         <th class="border border-gray-500 px-2 py-1">Total Saldo</th>
       </tr>
     </thead>
-    <tbody id="laporanSiplah" class="text-white"></tbody>
+    <tbody id="laporanSiplah" class="text-white">
+      <!-- Setiap <td> juga diberi class border -->
+      <tr>
+        <td class="border border-gray-500 px-2 py-1">1</td>
+        <td class="border border-gray-500 px-2 py-1">10.000.000</td>
+        <td class="border border-gray-500 px-2 py-1">8.000.000</td>
+        <td class="border border-gray-500 px-2 py-1">2.000.000</td>
+        <td class="border border-gray-500 px-2 py-1">5.000.000</td>
+      </tr>
+    </tbody>
   </table>
-    <!-- Judul di antara tabel -->
+
+  <!-- Judul di antara tabel -->
   <h2 class="text-lg font-bold mt-6 mb-2 text-green-800">Tabel Laporan Siplah</h2>
+
   <table class="table-auto border-collapse border border-gray-500 w-full text-sm text-white">
-      <thead class="bg-green-800 text-white font-bold">
+    <thead class="bg-green-800 text-white font-bold">
       <tr>
         <th class="border border-gray-500 px-2 py-1">No</th>
         <th class="border border-gray-500 px-2 py-1">Uraian</th>
@@ -49,13 +66,21 @@
         <th class="border border-gray-500 px-2 py-1">Kategori</th>
         <th class="border border-gray-500 px-2 py-1">Saldo</th>
         <th class="border border-gray-500 px-2 py-1">Keterangan</th>
-       </tr>
+      </tr>
     </thead>
-      <tbody id="rekapTriwulan" class="text-white">
-             <!-- Konten akan diisi lewat JS -->
+    <tbody id="rekapTriwulan" class="text-white">
+      <tr>
+        <td class="border border-gray-500 px-2 py-1">1</td>
+        <td class="border border-gray-500 px-2 py-1">Pengadaan Buku</td>
+        <td class="border border-gray-500 px-2 py-1">3.000.000</td>
+        <td class="border border-gray-500 px-2 py-1">Keluar</td>
+        <td class="border border-gray-500 px-2 py-1">7.000.000</td>
+        <td class="border border-gray-500 px-2 py-1">Selesai</td>
+      </tr>
     </tbody>
   </table>
 </section>
+
   <!-- Footer -->
   <footer class="w-full bg-green-800 text-center py-3 text-sm text-gray-200 border-t border-blue-700">
     2026 | SISTEM KEUANGAN | SD NEGERI WONOKERTO | LEKSONO | sd_wonokerto@gmail.com
