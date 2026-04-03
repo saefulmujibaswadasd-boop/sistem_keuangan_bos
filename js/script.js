@@ -1,4 +1,4 @@
-// LOGIN HANDLER
+// === LOGIN HANDLER ===
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("form");
   if (loginForm) {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// SIMPAN DATA RKAS KE LOCALSTORAGE
+// === SIMPAN DATA RKAS KE LOCALSTORAGE ===
 document.addEventListener("submit", e => {
   if (e.target.id === "rkasForm") {
     e.preventDefault();
@@ -38,7 +38,7 @@ document.addEventListener("submit", e => {
   }
 });
 
-// RENDER TABEL BOS DARI LOCALSTORAGE
+// === RENDER TABEL BOS DARI LOCALSTORAGE ===
 function renderBosTable() {
   const tbody = document.getElementById("bosTableBody");
   if (!tbody) return;
@@ -67,7 +67,8 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
-// === Tambahan navigasi section SIPLAH / Perubahan / BOSDA ===
+
+// === NAVIGASI SECTION SIPLAH / PERUBAHAN / BOSDA ===
 function hideAllSections() {
   document.getElementById('section-siplah').classList.add('hidden');
   document.getElementById('section-perubahan').classList.add('hidden');
@@ -92,7 +93,7 @@ document.getElementById('menu-bosda').addEventListener('click', function(e) {
   document.getElementById('section-bosda').classList.remove('hidden');
 });
 
-// Jika ada hash di URL (misalnya siplah.html#bosda), tampilkan section sesuai hash
+// === HASH URL HANDLER ===
 window.addEventListener('DOMContentLoaded', () => {
   const hash = window.location.hash;
   if (hash === "#bosda") {
@@ -107,27 +108,27 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// === Lanjutkan dengan event listener aksi password ===
-document.getElementById('laporanBody').addEventListener('change', (e) => {
-  ...
-});
-// EVENT LISTENER AKSI DENGAN PASSWORD
-document.getElementById('laporanBody').addEventListener('change', (e) => {
-  if (e.target.tagName === 'SELECT') {
-    const selected = e.target.value;
+// === EVENT LISTENER AKSI DENGAN PASSWORD ===
+// Pastikan ada elemen dengan id="laporanBody" atau sesuaikan dengan tbody tabel SIPLAH
+const laporanBody = document.getElementById('rekapTriwulan') || document.getElementById('laporanBody');
+if (laporanBody) {
+  laporanBody.addEventListener('change', (e) => {
+    if (e.target.tagName === 'SELECT') {
+      const selected = e.target.value;
 
-    if (selected.includes('✏️') || selected.includes('🗑️')) {
-      const lastShown = localStorage.getItem('lastShownSaeful');
-      const now = Date.now();
+      if (selected.includes('✏️') || selected.includes('🗑️')) {
+        const lastShown = localStorage.getItem('lastShownSaeful');
+        const now = Date.now();
 
-      if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
-        pendingAction = selected;
-        passwordModal.classList.remove('hidden'); // tampilkan modal password
-      } else {
-        jalankanAksi(selected); // langsung jalankan kalau masih dalam 1 jam
+        if (!lastShown || (now - parseInt(lastShown, 10)) > 3600000) {
+          pendingAction = selected;
+          passwordModal.classList.remove('hidden'); // tampilkan modal password
+        } else {
+          jalankanAksi(selected); // langsung jalankan kalau masih dalam 1 jam
+        }
+
+        e.target.selectedIndex = 0; // reset dropdown
       }
-
-      e.target.selectedIndex = 0; // reset dropdown
     }
-  }
-});
+  });
+}
