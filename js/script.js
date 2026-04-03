@@ -75,22 +75,18 @@ function hideAllSections() {
   document.getElementById('section-bosda').classList.add('hidden');
 }
 
-document.getElementById('menu-siplah').addEventListener('click', function(e) {
-  e.preventDefault();
-  hideAllSections();
-  document.getElementById('section-siplah').classList.remove('hidden');
-});
-
-document.getElementById('menu-perubahan').addEventListener('click', function(e) {
-  e.preventDefault();
-  hideAllSections();
-  document.getElementById('section-perubahan').classList.remove('hidden');
-});
-
-document.getElementById('menu-bosda').addEventListener('click', function(e) {
-  e.preventDefault();
-  hideAllSections();
-  document.getElementById('section-bosda').classList.remove('hidden');
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash === "#bosda") {
+    hideAllSections();
+    document.getElementById('section-bosda').classList.remove('hidden');
+  } else if (hash === "#perubahan") {
+    hideAllSections();
+    document.getElementById('section-perubahan').classList.remove('hidden');
+  } else {
+    hideAllSections();
+    document.getElementById('section-siplah').classList.remove('hidden');
+  }
 });
 
 // === HASH URL HANDLER ===
