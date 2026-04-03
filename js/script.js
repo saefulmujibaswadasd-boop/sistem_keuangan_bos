@@ -67,7 +67,50 @@ function renderBosTable() {
     </tr>
   `).join("");
 }
+// === Tambahan navigasi section SIPLAH / Perubahan / BOSDA ===
+function hideAllSections() {
+  document.getElementById('section-siplah').classList.add('hidden');
+  document.getElementById('section-perubahan').classList.add('hidden');
+  document.getElementById('section-bosda').classList.add('hidden');
+}
 
+document.getElementById('menu-siplah').addEventListener('click', function(e) {
+  e.preventDefault();
+  hideAllSections();
+  document.getElementById('section-siplah').classList.remove('hidden');
+});
+
+document.getElementById('menu-perubahan').addEventListener('click', function(e) {
+  e.preventDefault();
+  hideAllSections();
+  document.getElementById('section-perubahan').classList.remove('hidden');
+});
+
+document.getElementById('menu-bosda').addEventListener('click', function(e) {
+  e.preventDefault();
+  hideAllSections();
+  document.getElementById('section-bosda').classList.remove('hidden');
+});
+
+// Jika ada hash di URL (misalnya siplah.html#bosda), tampilkan section sesuai hash
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash === "#bosda") {
+    hideAllSections();
+    document.getElementById('section-bosda').classList.remove('hidden');
+  } else if (hash === "#perubahan") {
+    hideAllSections();
+    document.getElementById('section-perubahan').classList.remove('hidden');
+  } else {
+    hideAllSections();
+    document.getElementById('section-siplah').classList.remove('hidden');
+  }
+});
+
+// === Lanjutkan dengan event listener aksi password ===
+document.getElementById('laporanBody').addEventListener('change', (e) => {
+  ...
+});
 // EVENT LISTENER AKSI DENGAN PASSWORD
 document.getElementById('laporanBody').addEventListener('change', (e) => {
   if (e.target.tagName === 'SELECT') {
